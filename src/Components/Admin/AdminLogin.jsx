@@ -27,12 +27,14 @@ export default function AdminLogin() {
       if(login.data.message){
 
 localStorage.setItem('token', login.data.token);
+localStorage.setItem('isAdmin', true)
 
         navigate('/adminDashboard')
       }
 
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.error)
+      alert(error.response.data.error)
     }
 
   }
@@ -80,7 +82,7 @@ localStorage.setItem('token', login.data.token);
                       Password
                     </label>
                         <input
-                          type="text"
+                          type="password"
                           id="form3Example4cd"
                           className="form-control"
                           name='password'

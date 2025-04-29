@@ -60,19 +60,23 @@ export default function Tasks() {
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task, index) => (
-              <tr key={task.id}>
-                <td>{index + 1}</td>
-                <td>{task.assignee.email}</td>
-                <td>{task.organization?.name}</td>
-                <td>{task.title}</td>
-                <td>
-                  <button className="btn btn-primary btn-sm me-2" onClick={() => handleUpdate(task)}>Update</button>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(task.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  {tasks?.map((task, index) => {
+    if (!task.assignee?.email) return null;
+
+    return (
+      <tr key={task.id}>
+        <td>{index + 1}</td>
+        <td>{task.assignee.email}</td>
+        <td>{task.organization?.name}</td>
+        <td>{task.title}</td>
+        <td>
+          <button className="btn btn-primary btn-sm me-2" onClick={() => handleUpdate(task)}>Update</button>
+          <button className="btn btn-danger btn-sm" onClick={() => handleDelete(task.id)}>Delete</button>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
         </table>
       </div>
 

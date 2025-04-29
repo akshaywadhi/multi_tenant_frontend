@@ -51,10 +51,12 @@ const navigate = useNavigate()
     try {
       const data = await axios.post('http://localhost:5001/login', user)
       localStorage.setItem('token', data.data.token);
+      localStorage.setItem('isUser', true)
       navigate('/userDashboard')
       console.log(data.data)
     } catch (error) {
       console.log(error)
+      alert(error.response.data.error)
     }
   }
   return (
@@ -89,6 +91,7 @@ const navigate = useNavigate()
                           name='email'
                           value={user.email}
                           onChange={handleClick}
+                          required
                         />
                        
                       </div>
@@ -108,6 +111,7 @@ const navigate = useNavigate()
                           name='password'
                           value={user.password}
                           onChange={handleClick}
+                          required
                         />
                         
                       </div>

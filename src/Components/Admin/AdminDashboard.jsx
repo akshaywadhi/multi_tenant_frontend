@@ -3,6 +3,7 @@ import img from '../../assets/background.jpg'
 import CreateOrg from './CreateOrg'
 import Users from './Users'
 import Tasks from './Tasks'
+import Comment from './Comment'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -14,6 +15,7 @@ export default function AdminDashboard() {
   const [org, setOrg] = useState(false)
   const [users, setUsers] = useState(false)
   const [tasks, setTasks] = useState(false)
+  const [comment, setComment]  = useState(false)
   const navigate = useNavigate()
 
 
@@ -27,9 +29,16 @@ export default function AdminDashboard() {
     setOrg(false)
     setUsers(false)
     setTasks(false)
-    
+    setComment(false)
   }
 
+  const handleComment = () => {
+    setHome(false)
+    setOrg(false)
+    setUsers(false)
+    setTasks(false)
+    setComment(true)
+  }
 
 
   const handleOrg = () => {
@@ -37,7 +46,7 @@ export default function AdminDashboard() {
     setHome(false)
     setUsers(false)
     setTasks(false)
-    
+    setComment(false)
   }
 
   
@@ -46,7 +55,7 @@ export default function AdminDashboard() {
     setOrg(false)
     setUsers(true)
     setTasks(false)
-    
+    setComment(false)
   }
 
   const handleTasks = () => {
@@ -54,11 +63,12 @@ export default function AdminDashboard() {
     setOrg(false)
     setUsers(false)
     setTasks(true)
-    
+    setComment(false)
   }
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('isAdmin')
     navigate('/')
   }
   return (
@@ -101,7 +111,12 @@ export default function AdminDashboard() {
               Tasks
               </button>
             </li>
-           
+            <li>
+              <button className={comment ? 'nav-link active' : 'nav-link text-white'} onClick={handleComment}>
+            
+              Comments
+              </button>
+            </li>
           </ul>
           <hr />
           <div className="dropdown">
@@ -153,7 +168,11 @@ export default function AdminDashboard() {
       <Tasks/>
     )
    }
-
+{
+    comment && (
+  <Comment/>
+    )
+   }
 
   
     </div>

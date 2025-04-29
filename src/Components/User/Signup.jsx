@@ -15,7 +15,8 @@ export default function Signup() {
         console.log(data.data.findorg);
         setOrgs(data.data.findorg);
       } catch (error) {
-        console.log(error);
+        alert(error.response.data.error)
+        console.log(error.response.data)
       }
     }
     data();
@@ -46,13 +47,20 @@ export default function Signup() {
   const handleSubmit =async (e) => {
     e.preventDefault();
     try {
+
+      if (user.password.length < 6) {
+        alert("Password must be at least 6 characters long");
+        return;
+      }
       
       const signup = await axios.post('http://localhost:5001/signup', user)
 
       console.log(signup.data)
+      alert(signup.data.message)
       navigate('/login')
     } catch (error) {
       console.log(error)
+      alert(`${error.response.data.error}`)
     }
   };
   return (
@@ -89,6 +97,7 @@ export default function Signup() {
                               name="first_name"
                               value={user.first_name}
                               onChange={handleClick}
+                              required
                             />
                           </div>
                         </div>
@@ -112,6 +121,7 @@ export default function Signup() {
                               name="last_name"
                               value={user.last_name}
                               onChange={handleClick}
+                              required
                             />
                           </div>
                         </div>
@@ -129,12 +139,13 @@ export default function Signup() {
                               Email
                             </label>
                             <input
-                              type="text"
+                              type="email"
                               id="form3Example4c"
                               className="form-control"
                               name="email"
                               value={user.email}
                               onChange={handleClick}
+                              required
                             />
                           </div>
                         </div>
@@ -157,6 +168,7 @@ export default function Signup() {
                               name="password"
                               value={user.password}
                               onChange={handleClick}
+                              required
                             />
                           </div>
                         </div>

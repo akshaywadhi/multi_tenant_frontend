@@ -14,7 +14,6 @@ export default function UsersWithTask() {
     org_id: ''
   });
  
-const [emailInfo, setEmailInfo] = useState({ to: '', subject: '', message: '' });
 
 
   useEffect(() => {
@@ -61,28 +60,38 @@ const [emailInfo, setEmailInfo] = useState({ to: '', subject: '', message: '' })
     });
   };
 
-
   const handleSubmit = async () => {
     try {
-      await axiosInstance.post('/tasks', newTask);
+      const formData = new FormData();
+      formData.append('title', newTask.title);
+      formData.append('description', newTask.description);
+      formData.append('assigned_to', newTask.assigned_to);
+      formData.append('due_date', newTask.due_date);
+      formData.append('org_id', newTask.org_id);
+      
+      if (newTask.file) {
+        formData.append('file', newTask.file); 
+      }
+  
+      await axiosInstance.post('/tasks', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+  
       setNewTask({
         title: '',
         description: '',
         assigned_to: selectedUser ? selectedUser.id : '',
         due_date: '',
+        file: null
       });
+  
       alert('Task assigned successfully!');
-      setShowModal(false); 
+      setShowModal(false);
     } catch (error) {
       console.log(error);
-      alert('Failed to assign task');
-      
+      alert(error.response.data.error);
     }
-  };
-
-
-
-  
+  };  
 
   return (
     <div className="container w-75 my-4">
@@ -187,6 +196,15 @@ const [emailInfo, setEmailInfo] = useState({ to: '', subject: '', message: '' })
                       onChange={handleInputChange}
                     />
                   </div>
+                  <div className="mb-3">
+  <label className="form-label">Attach File</label>
+  <input
+    type="file"
+    className="form-control"
+    name="file"
+    onChange={(e) => setNewTask({ ...newTask, file: e.target.files[0] })}
+  />
+</div>
                   <button type="button" className="btn btn-primary" onClick={handleSubmit}>
                     Assign Task
                   </button>
@@ -201,3 +219,4 @@ const [emailInfo, setEmailInfo] = useState({ to: '', subject: '', message: '' })
     </div>
   );
 }
+
