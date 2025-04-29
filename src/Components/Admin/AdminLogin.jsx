@@ -23,7 +23,7 @@ export default function AdminLogin() {
     e.preventDefault()
 
     try {
-      const login = await axiosInstance.post('http://localhost:5001/adminLogin', admin)
+      const login = await axiosInstance.post('https://multi-tenant-backend-aypx.onrender.com/adminLogin', admin)
       if(login.data.message){
 
 localStorage.setItem('token', login.data.token);

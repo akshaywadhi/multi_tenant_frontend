@@ -10,7 +10,7 @@ export default function Signup() {
   useEffect(() => {
     async function data() {
       try {
-        let data = await axios.get("http://localhost:5001/orgs");
+        let data = await axios.get("https://multi-tenant-backend-aypx.onrender.com/orgs");
 
         console.log(data.data.findorg);
         setOrgs(data.data.findorg);
@@ -53,7 +53,7 @@ export default function Signup() {
         return;
       }
       
-      const signup = await axios.post('http://localhost:5001/signup', user)
+      const signup = await axios.post('https://multi-tenant-backend-aypx.onrender.com/signup', user)
 
       console.log(signup.data)
       alert(signup.data.message)

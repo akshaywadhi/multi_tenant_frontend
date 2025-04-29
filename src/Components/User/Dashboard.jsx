@@ -165,7 +165,7 @@ export default function UserDashboard() {
             <th>Title</th>
             <th>Description</th>
             <th>Due Date</th>
-     
+      <th>File</th>
           </tr>
         </thead>
         <tbody>
@@ -175,6 +175,20 @@ export default function UserDashboard() {
               <td>{task.title}</td>
               <td>{task.description}</td>
               <td>{task.due_date.slice(0,10)}</td>
+              <td>
+                {task.fileUrl ? (
+                  <a 
+                    href={task.fileUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View PDF
+                  </a>
+                ) : (
+                  <span className="text-muted">No File</span>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

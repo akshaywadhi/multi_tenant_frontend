@@ -9,7 +9,7 @@ const navigate = useNavigate()
   useEffect(() => {
     async function data() {
       try {
-        let data = await axios.get("http://localhost:5001/orgs");
+        let data = await axios.get("https://multi-tenant-backend-aypx.onrender.com/orgs");
 
         console.log(data.data.findorg);
       
@@ -49,7 +49,7 @@ const navigate = useNavigate()
     e.preventDefault()
 
     try {
-      const data = await axios.post('http://localhost:5001/login', user)
+      const data = await axios.post('https://multi-tenant-backend-aypx.onrender.com/login', user)
       localStorage.setItem('token', data.data.token);
       localStorage.setItem('isUser', true)
       navigate('/userDashboard')
